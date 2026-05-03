@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Cream background -->
+  <rect width="100" height="100" fill="#F3E7D3"/>
+
+  <!-- Sage green arc (upper half of circle, center 50,52 r=34) -->
+  <path d="M 16 52 A 34 34 0 0 1 84 52"
+        fill="none" stroke="#8A9474" stroke-width="3" stroke-linecap="butt"/>
+
+  <!-- House: peak at (50,18), walls to y=70 — stroke only, no fill -->
+  <polyline points="50,18 21,41 21,70"
+            fill="none" stroke="#3B312B" stroke-width="2.8"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="50,18 79,41 79,70"
+            fill="none" stroke="#3B312B" stroke-width="2.8"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Chimney -->
+  <rect x="61.5" y="20" width="6" height="9"
+        fill="#F3E7D3" stroke="#3B312B" stroke-width="2.2"/>
+
+  <!-- Pendant lamp -->
+  <line x1="37" y1="41" x2="37" y2="50"
+        stroke="#C9A46A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 29 50 L 45 50 Q 37 61 29 50 Z" fill="#C9A46A"/>
+  <rect x="34" y="48" width="6" height="3" rx="1" fill="#C9A46A"/>
+
+  <!-- Armchair (left) -->
+  <rect x="22" y="54" width="18" height="9" rx="2.5" fill="#D9C2A3"/>
+  <rect x="22" y="46" width="18" height="9" rx="2"   fill="#D9C2A3"/>
+  <rect x="21" y="49" width="3"  height="11" rx="1.5" fill="#C4A882"/>
+  <rect x="37" y="49" width="3"  height="11" rx="1.5" fill="#C4A882"/>
+  <line x1="25" y1="63" x2="24" y2="69"
+        stroke="#9A6B3A" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="37" y1="63" x2="38" y2="69"
+        stroke="#9A6B3A" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- Picture frame (back wall, centre-right) -->
+  <rect x="48" y="44" width="14" height="10" rx="1.5"
+        fill="none" stroke="#C9A46A" stroke-width="2"/>
+  <path d="M 50 53 Q 55 46 62 53" fill="#C9A46A" fill-opacity="0.3"/>
+
+  <!-- Sideboard -->
+  <rect x="49" y="57" width="28" height="11" rx="2.5" fill="#B8923A"/>
+  <line x1="63" y1="59" x2="63" y2="67"
+        stroke="#7A5C20" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="57"  cy="63" r="1.5" fill="#7A5C20" fill-opacity="0.45"/>
+  <circle cx="69.5" cy="63" r="1.5" fill="#7A5C20" fill-opacity="0.45"/>
+  <line x1="52" y1="68" x2="52" y2="74"
+        stroke="#9A6B3A" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="74" y1="68" x2="74" y2="74"
+        stroke="#9A6B3A" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- Vase left (short) -->
+  <path d="M 54 57 C 52 52 53 47 56 47 C 59 47 60 52 58 57 Z" fill="#D9C2A3"/>
+
+  <!-- Vase right (tall) + plant leaves -->
+  <path d="M 64 57 C 62 51 63 44 66 44 C 69 44 70 51 68 57 Z" fill="#D9C2A3"/>
+  <path d="M 66 44 Q 63 39 61 35" stroke="#8A9474" stroke-width="1.6"
+        fill="none" stroke-linecap="round"/>
+  <path d="M 66 44 Q 69 39 71 35" stroke="#8A9474" stroke-width="1.6"
+        fill="none" stroke-linecap="round"/>
+  <path d="M 66 43 Q 66 38 66 34"  stroke="#8A9474" stroke-width="1.4"
+        fill="none" stroke-linecap="round"/>
+</svg>

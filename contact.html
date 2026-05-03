@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Belle Maison – Contactez-nous. Envoyez une photo de votre pièce et recevez des suggestions de décoration personnalisées. Livraison partout à Madagascar.">
+  <title>Contact – Belle Maison Madagascar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── Contact page extras ─────────────────────────────── */
+    .contact-page-hero {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-divider);
+      padding-top: calc(72px + var(--space-10));
+      padding-bottom: var(--space-10);
+    }
+
+    /* Main contact layout */
+    .contact-layout {
+      padding-block: clamp(var(--space-12), 7vw, var(--space-20));
+      background: var(--color-bg);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: var(--space-12);
+      align-items: start;
+    }
+
+    /* ── Inspiration Feature (Left) ────────────────────── */
+    .inspiration-feature {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+    }
+
+    .inspiration-feature-header {
+      background: var(--color-brun);
+      padding: var(--space-8) var(--space-8) var(--space-6);
+    }
+    .feature-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: rgba(201,164,106,0.25);
+      color: var(--color-or-light);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px var(--space-4);
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(201,164,106,0.4);
+      margin-bottom: var(--space-4);
+    }
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: #FAF7F2;
+      line-height: 1.25;
+      margin-bottom: var(--space-3);
+    }
+    .feature-title em { font-style: italic; font-weight: 400; color: var(--color-or-light); }
+    .feature-subtitle {
+      font-size: var(--text-sm);
+      color: rgba(250,247,242,0.7);
+      font-weight: 300;
+      line-height: 1.65;
+      max-width: 52ch;
+    }
+
+    .inspiration-feature-body { padding: var(--space-8); }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 2px dashed var(--color-sable);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10) var(--space-6);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition);
+      background: var(--color-beige);
+      margin-bottom: var(--space-6);
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--color-or);
+      background: rgba(201,164,106,0.08);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .upload-icon {
+      width: 52px; height: 52px;
+      background: var(--color-surface);
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-sable);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-4);
+      color: var(--color-sage);
+    }
+    .upload-title {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--color-brun);
+      margin-bottom: var(--space-2);
+    }
+    .upload-hint {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      max-width: none;
+    }
+    .upload-preview {
+      display: none;
+      margin: var(--space-4) auto 0;
+      max-width: 240px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 2px solid var(--color-or);
+    }
+    .upload-preview img { width: 100%; display: block; }
+    .upload-preview.visible { display: block; }
+
+    /* Inspiration form fields */
+    .insp-form { display: flex; flex-direction: column; gap: var(--space-5); }
+
+    .form-field { display: flex; flex-direction: column; gap: var(--space-2); }
+    .form-field label {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--color-brun);
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 1.5px solid var(--color-sable);
+      border-radius: var(--radius-md);
+      background: var(--color-blanc);
+      color: var(--color-brun);
+      font-size: var(--text-sm);
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus { border-color: var(--color-sage); }
+    .form-field textarea { resize: vertical; min-height: 110px; }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--color-text-faint); }
+
+    .room-types {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+    }
+    .room-type-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      border: 1.5px solid var(--color-sable);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--color-text-muted);
+      background: transparent;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .room-type-btn:hover, .room-type-btn.selected {
+      border-color: var(--color-brun);
+      background: var(--color-beige);
+      color: var(--color-brun);
+    }
+    .room-type-btn.selected { background: var(--color-brun); color: var(--color-blanc); border-color: var(--color-brun); }
+
+    .btn-submit-insp {
+      width: 100%;
+      justify-content: center;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-6);
+      font-size: var(--text-base);
+    }
+
+    /* Success state */
+    .insp-success {
+      display: none;
+      text-align: center;
+      padding: var(--space-10) var(--space-6);
+    }
+    .success-icon {
+      width: 64px; height: 64px;
+      background: rgba(138,148,116,0.15);
+      border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-5);
+      color: var(--color-sage);
+    }
+    .insp-success h3 { font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-brun); margin-bottom: var(--space-3); }
+    .insp-success p { font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 300; max-width: 38ch; margin-inline: auto; }
+
+    /* ── Contact sidebar (Right) ────────────────────────── */
+    .contact-sidebar { display: flex; flex-direction: column; gap: var(--space-5); }
+
+    .contact-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6) var(--space-6);
+    }
+    .contact-card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-brun);
+      margin-bottom: var(--space-5);
+    }
+
+    /* Direct contact links */
+    .contact-links { display: flex; flex-direction: column; gap: var(--space-3); }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      text-decoration: none;
+      color: var(--color-brun);
+      padding: var(--space-4);
+      border: 1.5px solid var(--color-sable);
+      border-radius: var(--radius-xl);
+      transition: all var(--transition);
+    }
+    .contact-link:hover {
+      border-color: var(--color-sage);
+      background: rgba(138,148,116,0.07);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+    .contact-link-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .whatsapp-icon { background: #25D366; color: white; }
+    .email-icon    { background: var(--color-sage); color: white; }
+    .phone-icon    { background: var(--color-or); color: var(--color-brun); }
+    .contact-link-info { display: flex; flex-direction: column; gap: 1px; }
+    .contact-link-label { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+    .contact-link-value { font-size: var(--text-sm); font-weight: 600; color: var(--color-brun); }
+
+    /* Simple contact form */
+    .simple-form { display: flex; flex-direction: column; gap: var(--space-4); }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+
+    /* Info card */
+    .info-list { display: flex; flex-direction: column; gap: var(--space-4); }
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+    .info-item-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-full);
+      background: var(--color-beige);
+      border: 1px solid var(--color-sable);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-sage);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .info-item-text strong { display: block; font-size: var(--text-sm); font-weight: 600; color: var(--color-brun); }
+    .info-item-text span   { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 300; line-height: 1.5; }
+
+    /* Toast */
+    .page-toast {
+      position: fixed;
+      bottom: var(--space-6);
+      left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--color-brun);
+      color: var(--color-blanc);
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 300ms ease, transform 300ms ease;
+      z-index: 400;
+      white-space: nowrap;
+    }
+    .page-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 1024px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-sidebar { flex-direction: row; flex-wrap: wrap; }
+      .contact-card { flex: 1; min-width: 280px; }
+    }
+    @media (max-width: 768px) {
+      .contact-sidebar { flex-direction: column; }
+      .form-row { grid-template-columns: 1fr; }
+      .room-types { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main-content" class="skip-link">Passer au contenu principal</a>
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html" class="logo" aria-label="Belle Maison – Accueil">
+        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <rect x="8" y="20" width="28" height="18" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M4 22 L22 6 L40 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="17" y="28" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="34" cy="8" r="3" fill="#C9A46A" opacity="0.9"/>
+        </svg>
+        <span class="logo-text">Belle Maison</span>
+      </a>
+      <nav class="main-nav" id="nav-menu" aria-label="Navigation principale">
+        <ul role="list">
+          <li><a href="index.html" class="nav-link">Accueil</a></li>
+          <li><a href="produits.html" class="nav-link">Produits</a></li>
+          <li><a href="collections.html" class="nav-link">Collections</a></li>
+          <li><a href="contact.html" class="nav-link active">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="produits.html" class="icon-btn" aria-label="Voir les produits">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+            <path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  </header>
+
+
+  <main id="main-content">
+
+    <!-- PAGE HERO -->
+    <section class="contact-page-hero" aria-label="Page Contact">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane">
+          <a href="index.html">Accueil</a>
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">Contact</span>
+        </nav>
+        <h1 class="page-title">Parlons de votre maison</h1>
+        <p class="page-desc">Envoyez-nous une photo de votre pièce et recevez des suggestions décoration personnalisées — ou contactez-nous directement pour toute question.</p>
+      </div>
+    </section>
+
+
+    <!-- MAIN CONTACT -->
+    <section class="contact-layout" aria-labelledby="contact-main-title">
+      <div class="container">
+        <div class="contact-grid">
+
+          <!-- ── INSPIRATION FEATURE (Main/Left) ──────────── -->
+          <div class="inspiration-feature" id="inspiration">
+
+            <div class="inspiration-feature-header">
+              <div class="feature-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Fonctionnalité Exclusive
+              </div>
+              <h2 id="contact-main-title" class="feature-title">Envoyez votre pièce,<br>recevez nos <em>suggestions</em></h2>
+              <p class="feature-subtitle">Photographiez la pièce que vous souhaitez décorer ou transformer. Notre équipe analyse votre espace et sélectionne les produits Belle Maison les mieux adaptés à votre intérieur.</p>
+            </div>
+
+            <div class="inspiration-feature-body">
+
+              <!-- Upload zone -->
+              <div class="upload-zone" id="upload-zone" role="button" aria-label="Déposer une photo de votre pièce" tabindex="0">
+                <input type="file" id="room-photo" accept="image/*" aria-label="Choisir une photo de votre pièce">
+                <div class="upload-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+                  </svg>
+                </div>
+                <p class="upload-title">Glissez votre photo ici</p>
+                <p class="upload-hint">ou cliquez pour sélectionner · JPG, PNG, WEBP · max 10 Mo</p>
+                <div class="upload-preview" id="upload-preview">
+                  <img id="preview-img" src="" alt="Aperçu de votre photo">
+                </div>
+              </div>
+
+              <!-- Inspiration form -->
+              <form class="insp-form" id="insp-form" novalidate>
+
+                <div class="form-field">
+                  <label>Quelle pièce souhaitez-vous décorer ?</label>
+                  <div class="room-types" role="group" aria-label="Type de pièce">
+                    <button type="button" class="room-type-btn" data-room="Salon">🛋️ Salon</button>
+                    <button type="button" class="room-type-btn" data-room="Chambre">🛏️ Chambre</button>
+                    <button type="button" class="room-type-btn" data-room="Cuisine">🍳 Cuisine</button>
+                    <button type="button" class="room-type-btn" data-room="Bureau">💻 Bureau</button>
+                    <button type="button" class="room-type-btn" data-room="Entrée">🚪 Entrée</button>
+                    <button type="button" class="room-type-btn" data-room="Autre">✨ Autre</button>
+                  </div>
+                  <input type="hidden" id="room-type" name="room-type">
+                </div>
+
+                <div class="form-field">
+                  <label for="insp-name">Votre prénom</label>
+                  <input type="text" id="insp-name" name="name" placeholder="Ex : Marie" required autocomplete="given-name">
+                </div>
+
+                <div class="form-field">
+                  <label for="insp-desc">Décrivez votre projet <span style="color:var(--color-text-faint);font-weight:300">(facultatif)</span></label>
+                  <textarea id="insp-desc" name="description" placeholder="Ex : je veux un salon plus chaleureux avec des tons naturels, j'aime le bois et les plantes…"></textarea>
+                </div>
+
+                <div class="form-field">
+                  <label for="insp-contact">WhatsApp ou e-mail pour vous répondre</label>
+                  <input type="text" id="insp-contact" name="contact" placeholder="034 00 000 00 ou votre@email.com" required autocomplete="email">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-submit-insp">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  Envoyer ma demande
+                </button>
+              </form>
+
+              <!-- Success state -->
+              <div class="insp-success" id="insp-success" aria-live="polite">
+                <div class="success-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h3>Demande envoyée !</h3>
+                <p>Merci <strong id="success-name"></strong>. Notre équipe analyse votre pièce et vous répond sous 24h avec des suggestions personnalisées.</p>
+              </div>
+
+            </div>
+          </div><!-- end inspiration feature -->
+
+
+          <!-- ── SIDEBAR (Right) ────────────────────────── -->
+          <aside class="contact-sidebar">
+
+            <!-- Direct contact -->
+            <div class="contact-card">
+              <h2 class="contact-card-title">Contactez-nous directement</h2>
+              <div class="contact-links">
+                <a href="https://wa.me/261340000000" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Envoyer un message WhatsApp">
+                  <div class="contact-link-icon whatsapp-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.52 14.08c-.23.65-1.35 1.24-1.85 1.31-.5.07-1.13.1-3.54-.74-2.97-1.02-4.88-4.02-5.03-4.2-.15-.19-1.25-1.66-1.25-3.16 0-1.5.79-2.24 1.07-2.55.23-.25.62-.37 1-.37.12 0 .23.01.33.01.29.01.44.02.63.49.24.58.81 2.01.88 2.16.07.15.12.32.02.51-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.14-.28.28-.12.56.16.27.71 1.17 1.52 1.9 1.05.95 1.93 1.24 2.2 1.38.27.13.43.11.59-.07.16-.17.68-.79.87-1.06.18-.27.37-.23.62-.14.25.09 1.6.75 1.87.89.27.13.45.19.52.3.07.11.07.65-.16 1.3z"/>
+                    </svg>
+                  </div>
+                  <div class="contact-link-info">
+                    <span class="contact-link-label">WhatsApp</span>
+                    <span class="contact-link-value">+261 34 00 000 00</span>
+                  </div>
+                </a>
+                <a href="mailto:contact@bellemaison.mg" class="contact-link" aria-label="Envoyer un e-mail">
+                  <div class="contact-link-icon email-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </div>
+                  <div class="contact-link-info">
+                    <span class="contact-link-label">E-mail</span>
+                    <span class="contact-link-value">contact@bellemaison.mg</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Simple contact form -->
+            <div class="contact-card">
+              <h2 class="contact-card-title">Envoyez un message</h2>
+              <form class="simple-form" id="simple-form" novalidate>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label for="s-name">Prénom</label>
+                    <input type="text" id="s-name" placeholder="Marie" required autocomplete="given-name">
+                  </div>
+                  <div class="form-field">
+                    <label for="s-phone">Téléphone</label>
+                    <input type="tel" id="s-phone" placeholder="034 00 000 00" autocomplete="tel">
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label for="s-email">E-mail</label>
+                  <input type="email" id="s-email" placeholder="votre@email.com" required autocomplete="email">
+                </div>
+                <div class="form-field">
+                  <label for="s-subject">Sujet</label>
+                  <select id="s-subject">
+                    <option value="">Choisir un sujet</option>
+                    <option value="commande">Question sur une commande</option>
+                    <option value="produit">Information produit</option>
+                    <option value="livraison">Livraison & délais</option>
+                    <option value="inspiration">Inspiration déco</option>
+                    <option value="autre">Autre</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="s-message">Message</label>
+                  <textarea id="s-message" placeholder="Votre message…" required style="min-height:90px;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+                  Envoyer
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </form>
+            </div>
+
+            <!-- Info -->
+            <div class="contact-card">
+              <h2 class="contact-card-title">Informations pratiques</h2>
+              <div class="info-list">
+                <div class="info-item">
+                  <div class="info-item-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </div>
+                  <div class="info-item-text">
+                    <strong>Heures de réponse</strong>
+                    <span>Lundi – Samedi · 8h00 – 18h00<br>Réponse sous 24h</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  </div>
+                  <div class="info-item-text">
+                    <strong>Localisation</strong>
+                    <span>Antananarivo, Madagascar<br>Livraison partout sur l'île</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 6v3h-7V8Z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  </div>
+                  <div class="info-item-text">
+                    <strong>Livraison</strong>
+                    <span>Tana : 2–3 jours ouvrés<br>Provinces : 4–7 jours ouvrés</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                  </div>
+                  <div class="info-item-text">
+                    <strong>Paiement Mobile Money</strong>
+                    <span>MVola · Orange Money · Airtel Money</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-text footer-logo">Belle Maison</span>
+        <p>Décoration intérieure Japandi · Madagascar</p>
+      </div>
+      <nav class="footer-nav" aria-label="Navigation pied de page">
+        <a href="index.html">Accueil</a>
+        <a href="produits.html">Produits</a>
+        <a href="collections.html">Collections</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="livraison.html">Livraison</a>
+      </nav>
+      <p class="footer-copy">© 2025 Belle Maison Madagascar. Tous droits réservés.</p>
+      <nav class="footer-legal-nav" aria-label="Liens légaux">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <span class="footer-legal-sep" aria-hidden="true">●</span>
+        <a href="cgu.html">CGU</a>
+        <span class="footer-legal-sep" aria-hidden="true">●</span>
+        <a href="cgv.html">CGV</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="page-toast" id="page-toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <script>
+    // ── Header ────────────────────────────────────────────
+    const header = document.getElementById('header');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      header.classList.toggle('scrolled', y > 60);
+      header.classList.toggle('hidden', y > lastY && y > 120);
+      lastY = y;
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+    const navOvl    = document.getElementById('nav-overlay');
+    function toggleNav(open) {
+      hamburger.setAttribute('aria-expanded', open);
+      navMenu.classList.toggle('is-open', open);
+      navOvl.classList.toggle('is-visible', open);
+      document.body.classList.toggle('menu-open', open);
+    }
+    hamburger.addEventListener('click', () => toggleNav(hamburger.getAttribute('aria-expanded') !== 'true'));
+    navOvl.addEventListener('click', () => toggleNav(false));
+    navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => toggleNav(false)));
+
+    // ── Toast helper ─────────────────────────────────────
+    function showToast(msg) {
+      const t = document.getElementById('page-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // ── Photo upload preview ──────────────────────────────
+    const fileInput  = document.getElementById('room-photo');
+    const uploadZone = document.getElementById('upload-zone');
+    const preview    = document.getElementById('upload-preview');
+    const previewImg = document.getElementById('preview-img');
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        previewImg.src = e.target.result;
+        preview.classList.add('visible');
+        uploadZone.querySelector('.upload-title').textContent = 'Photo sélectionnée ✓';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          previewImg.src = ev.target.result;
+          preview.classList.add('visible');
+          uploadZone.querySelector('.upload-title').textContent = 'Photo sélectionnée ✓';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // ── Room type selector ────────────────────────────────
+    let selectedRoom = '';
+    document.querySelectorAll('.room-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.room-type-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedRoom = btn.dataset.room;
+        document.getElementById('room-type').value = selectedRoom;
+      });
+    });
+
+    // ── Inspiration form submit ───────────────────────────
+    document.getElementById('insp-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const name    = document.getElementById('insp-name').value.trim();
+      const contact = document.getElementById('insp-contact').value.trim();
+      if (!name || !contact) {
+        showToast('Veuillez remplir les champs obligatoires.');
+        return;
+      }
+      document.getElementById('insp-form').style.display = 'none';
+      const uploadZoneEl = document.getElementById('upload-zone');
+      uploadZoneEl.style.display = 'none';
+      document.getElementById('success-name').textContent = name;
+      document.getElementById('insp-success').style.display = 'block';
+      showToast('✓ Demande envoyée ! Réponse sous 24h.');
+    });
+
+    // ── Simple form submit ────────────────────────────────
+    document.getElementById('simple-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const name  = document.getElementById('s-name').value.trim();
+      const email = document.getElementById('s-email').value.trim();
+      const msg   = document.getElementById('s-message').value.trim();
+      if (!name || !email || !msg) {
+        showToast('Veuillez remplir tous les champs obligatoires.');
+        return;
+      }
+      document.getElementById('simple-form').reset();
+      showToast('✓ Message envoyé ! Nous vous répondons sous 24h.');
+    });
+
+    // ── Scroll animations ─────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.contact-card, .inspiration-feature').forEach((el, i) => {
+      el.classList.add('anim-target');
+      el.style.transitionDelay = i * 80 + 'ms';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Belle Maison – Livraison partout à Madagascar. Paiement Mobile Money (MVola, Orange Money, Airtel Money). Garantie et retours.">
+  <title>Livraison & Paiement – Belle Maison Madagascar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── Livraison page extras ───────────────────────────── */
+    .livraison-hero {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-divider);
+      padding-top: calc(72px + var(--space-10));
+      padding-bottom: var(--space-10);
+    }
+
+    /* Info cards grid */
+    .info-cards-section {
+      padding-block: clamp(var(--space-16), 8vw, var(--space-20));
+      background: var(--color-bg);
+    }
+    .info-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+    .info-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8) var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      transition: box-shadow var(--transition-slow), transform var(--transition-slow);
+    }
+    .info-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+
+    .info-card-icon {
+      width: 56px; height: 56px;
+      border-radius: var(--radius-full);
+      background: var(--color-beige);
+      border: 1.5px solid var(--color-sable);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-sage);
+    }
+    .info-card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-brun);
+    }
+    .info-card-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: none;
+    }
+    .info-card-desc strong { color: var(--color-brun); font-weight: 600; }
+
+    /* Zones table */
+    .zones-section {
+      padding-block: clamp(var(--space-16), 8vw, var(--space-20));
+      background: var(--color-surface);
+    }
+    .zones-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-10);
+      align-items: start;
+      margin-top: var(--space-12);
+    }
+    .zone-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+    }
+    .zone-card-header {
+      padding: var(--space-5) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .zone-card-header.primary { background: var(--color-brun); color: var(--color-blanc); }
+    .zone-card-header.secondary { background: var(--color-beige); color: var(--color-brun); }
+    .zone-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .zone-icon.light  { background: rgba(250,247,242,0.2); color: var(--color-blanc); }
+    .zone-icon.dark   { background: var(--color-surface); color: var(--color-sage); }
+    .zone-card-title  { font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; }
+    .zone-card-sub    { font-size: var(--text-xs); opacity: 0.75; font-weight: 300; }
+    .zone-card-body   { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); background: var(--color-blanc); }
+
+    .zone-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-divider);
+      gap: var(--space-4);
+    }
+    .zone-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .zone-row-label { font-size: var(--text-sm); color: var(--color-brun); font-weight: 500; }
+    .zone-row-value { font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 400; text-align: right; }
+    .zone-row-value strong { display: block; color: var(--color-brun); font-weight: 700; font-size: var(--text-base); }
+
+    /* Payment section */
+    .payment-section {
+      padding-block: clamp(var(--space-16), 8vw, var(--space-20));
+      background: var(--color-bg);
+    }
+    .payment-operators {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+    .operator-info-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8) var(--space-6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+      text-align: center;
+      transition: box-shadow var(--transition-slow), transform var(--transition-slow);
+    }
+    .operator-info-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .operator-logo-large {
+      width: 72px; height: 72px;
+      border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      font-weight: 900;
+      color: white;
+    }
+    .op-mvola  { background: linear-gradient(135deg, #e53935, #c62828); }
+    .op-orange { background: linear-gradient(135deg, #ff8f00, #e65100); }
+    .op-airtel { background: linear-gradient(135deg, #e53935, #880e4f); }
+    .operator-info-name {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-brun);
+    }
+    .operator-info-brand { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: -var(--space-2); }
+    .operator-steps {
+      list-style: none;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .operator-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-align: left;
+      max-width: none;
+    }
+    .operator-steps li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 18px; height: 18px;
+      background: var(--color-beige);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-sable);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--color-brun);
+      margin-top: 1px;
+    }
+    .operator-steps li:nth-child(1)::before { content: '1'; }
+    .operator-steps li:nth-child(2)::before { content: '2'; }
+    .operator-steps li:nth-child(3)::before { content: '3'; }
+
+    /* Warranty section */
+    .warranty-section {
+      padding-block: clamp(var(--space-16), 8vw, var(--space-20));
+      background: var(--color-surface);
+    }
+    .warranty-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: start;
+      margin-top: var(--space-12);
+    }
+    .warranty-text { display: flex; flex-direction: column; gap: var(--space-5); }
+    .warranty-text p { font-size: var(--text-base); color: var(--color-text-muted); font-weight: 300; line-height: 1.8; max-width: 52ch; }
+    .warranty-text p strong { color: var(--color-brun); font-weight: 600; }
+
+    .warranty-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .warranty-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-5) var(--space-5);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--color-border);
+      background: var(--color-blanc);
+    }
+    .warranty-item-icon {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .icon-yes { background: rgba(138,148,116,0.15); color: var(--color-sage); }
+    .icon-no  { background: rgba(192,57,43,0.1);    color: #c0392b; }
+    .warranty-item-text strong { display: block; font-size: var(--text-sm); font-weight: 600; color: var(--color-brun); margin-bottom: 2px; }
+    .warranty-item-text span   { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 300; line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section {
+      padding-block: clamp(var(--space-16), 8vw, var(--space-20));
+      background: var(--color-bg);
+    }
+    .faq-list {
+      max-width: var(--content-narrow);
+      margin: var(--space-12) auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .faq-item {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      background: var(--color-surface);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: var(--space-5) var(--space-6);
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--color-brun);
+      text-align: left;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    .faq-question:hover { background: var(--color-beige); }
+    .faq-chevron {
+      flex-shrink: 0;
+      color: var(--color-sage);
+      transition: transform var(--transition);
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s var(--ease-out), padding 0.35s var(--ease-out);
+    }
+    .faq-item.open .faq-answer { max-height: 400px; }
+    .faq-answer-inner {
+      padding: 0 var(--space-6) var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      font-weight: 300;
+      line-height: 1.75;
+      max-width: none;
+    }
+    .faq-answer-inner strong { color: var(--color-brun); font-weight: 600; }
+
+    @media (max-width: 1024px) {
+      .info-cards-grid    { grid-template-columns: 1fr 1fr; }
+      .payment-operators  { grid-template-columns: 1fr 1fr; }
+      .zones-grid         { grid-template-columns: 1fr; }
+      .warranty-grid      { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .info-cards-grid    { grid-template-columns: 1fr; }
+      .payment-operators  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main-content" class="skip-link">Passer au contenu principal</a>
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html" class="logo" aria-label="Belle Maison – Accueil">
+        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <rect x="8" y="20" width="28" height="18" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M4 22 L22 6 L40 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="17" y="28" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="34" cy="8" r="3" fill="#C9A46A" opacity="0.9"/>
+        </svg>
+        <span class="logo-text">Belle Maison</span>
+      </a>
+      <nav class="main-nav" id="nav-menu" aria-label="Navigation principale">
+        <ul role="list">
+          <li><a href="index.html" class="nav-link">Accueil</a></li>
+          <li><a href="produits.html" class="nav-link">Produits</a></li>
+          <li><a href="collections.html" class="nav-link">Collections</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="produits.html" class="icon-btn" aria-label="Voir les produits">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+            <path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  </header>
+
+
+  <main id="main-content">
+
+    <!-- PAGE HERO -->
+    <section class="livraison-hero" aria-label="Livraison et Paiement">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane">
+          <a href="index.html">Accueil</a>
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">Livraison & Paiement</span>
+        </nav>
+        <h1 class="page-title">Livraison & Paiement</h1>
+        <p class="page-desc">Livraison partout à Madagascar · Paiement Mobile Money sécurisé · Garantie sur certains produits.</p>
+      </div>
+    </section>
+
+
+    <!-- INFO CARDS -->
+    <section class="info-cards-section" aria-labelledby="info-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Ce qu'il faut savoir</span>
+          <h2 id="info-title" class="section-title">Nos engagements</h2>
+          <p class="section-desc">Livraison rapide, paiement flexible et service attentionné à chaque commande.</p>
+        </header>
+        <div class="info-cards-grid">
+
+          <div class="info-card anim-target">
+            <div class="info-card-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 6v3h-7V8Z"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            </div>
+            <h3 class="info-card-title">Livraison Rapide</h3>
+            <p class="info-card-desc"><strong>Antananarivo :</strong> 2 à 3 jours ouvrés.<br><strong>Provinces :</strong> 4 à 7 jours ouvrés.<br>Suivi de commande disponible par WhatsApp dès l'expédition.</p>
+          </div>
+
+          <div class="info-card anim-target">
+            <div class="info-card-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h2M10 15h4"/>
+              </svg>
+            </div>
+            <h3 class="info-card-title">Paiement Mobile Money</h3>
+            <p class="info-card-desc">Réglez en toute sécurité via <strong>MVola (Telma)</strong>, <strong>Orange Money</strong> ou <strong>Airtel Money</strong>. Votre commande est traitée dès confirmation du paiement.</p>
+          </div>
+
+          <div class="info-card anim-target">
+            <div class="info-card-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3 class="info-card-title">Garantie Produit</h3>
+            <p class="info-card-desc">Certains produits bénéficient d'une <strong>garantie de 1 mois</strong> contre les défauts de fabrication. Les produits concernés sont clairement identifiés sur chaque fiche article.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- DELIVERY ZONES -->
+    <section class="zones-section" aria-labelledby="zones-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Zones de livraison</span>
+          <h2 id="zones-title" class="section-title">Partout à Madagascar</h2>
+          <p class="section-desc">Nous livrons dans toutes les régions de l'île — de la capitale aux villes les plus éloignées.</p>
+        </header>
+        <div class="zones-grid">
+
+          <!-- Antananarivo -->
+          <div class="zone-card anim-target">
+            <div class="zone-card-header primary">
+              <div class="zone-icon light" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="zone-card-title">Antananarivo</div>
+                <div class="zone-card-sub">Capitale & communes environnantes</div>
+              </div>
+            </div>
+            <div class="zone-card-body">
+              <div class="zone-row">
+                <span class="zone-row-label">Délai de livraison</span>
+                <span class="zone-row-value"><strong>2 – 3 jours ouvrés</strong></span>
+              </div>
+              <div class="zone-row">
+                <span class="zone-row-label">Frais de livraison</span>
+                <span class="zone-row-value"><strong>5 000 Ar</strong></span>
+              </div>
+              <div class="zone-row">
+                <span class="zone-row-label">Livraison gratuite dès</span>
+                <span class="zone-row-value"><strong>150 000 Ar</strong> d'achat</span>
+              </div>
+              <div class="zone-row">
+                <span class="zone-row-label">Suivi commande</span>
+                <span class="zone-row-value">Via WhatsApp</span>
+              </div>
+              <div class="zone-row">
+                <span class="zone-row-label">Zones couvertes</span>
+                <span class="zone-row-value">Tana ville, Ivato, Ambohidratrimo, Anosy, Ankorondrano…</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Provinces -->
+          <div class="zone-card anim-target">
+            <div class="zone-card-header secondary">
+              <div class="zone-icon dark" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div>
+                <div class="zone-card-title">Provinces & Régions</div>
+                <div class="zone-card-sub">Toute l'île de Madagascar</div>
+              </div>
+            </div>
+            <div class="zone-card-body">
+              <div class="zone-row">
+                <span class="zone-row-label">Délai de livraison</span>
+                <span class="zone-row-value"><strong>4 – 7 jours ouvrés</strong></span>
+              </div>
+              <div class="zone-row">
+                <span class="zone-row-label">Frais de livraison</span>
+                <span class="zone-row-value"><strong>À partir de 15 000 Ar</strong><br>selon la région</span>
+              </div>
+              <div class="zone-row">
+                <span class="zone-row-label">Livraison gratuite dès</span>
+                <span class="zone-row-value"><strong>300 000 Ar</strong> d'achat</span>
+              </div>
+              <div class="zone-row">
+                <span class="zone-row-label">Suivi commande</span>
+                <span class="zone-row-value">Via WhatsApp</span>
+              </div>
+              <div class="zone-row">
+                <span class="zone-row-label">Régions couvertes</span>
+                <span class="zone-row-value">Toamasina, Mahajanga, Fianarantsoa, Toliara, Antsiranana, Sambava, Nosy Be…</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PAYMENT -->
+    <section class="payment-section" aria-labelledby="payment-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Modes de paiement</span>
+          <h2 id="payment-title" class="section-title">Mobile Money Sécurisé</h2>
+          <p class="section-desc">Payez facilement avec votre opérateur mobile préféré. Votre commande est traitée dès confirmation.</p>
+        </header>
+        <div class="payment-operators">
+
+          <div class="operator-info-card anim-target">
+            <div class="operator-logo-large op-mvola" aria-hidden="true">M</div>
+            <div class="operator-info-name">MVola</div>
+            <div class="operator-info-brand">par Telma Madagascar</div>
+            <ul class="operator-steps" aria-label="Étapes paiement MVola">
+              <li>Composez <strong>*111#</strong> sur votre téléphone Telma</li>
+              <li>Choisissez « Paiement marchand » et entrez notre numéro</li>
+              <li>Confirmez avec votre code PIN MVola</li>
+            </ul>
+          </div>
+
+          <div class="operator-info-card anim-target">
+            <div class="operator-logo-large op-orange" aria-hidden="true">O</div>
+            <div class="operator-info-name">Orange Money</div>
+            <div class="operator-info-brand">par Orange Madagascar</div>
+            <ul class="operator-steps" aria-label="Étapes paiement Orange Money">
+              <li>Composez <strong>#144#</strong> sur votre téléphone Orange</li>
+              <li>Sélectionnez « Paiement » puis entrez notre numéro</li>
+              <li>Validez le montant avec votre code PIN</li>
+            </ul>
+          </div>
+
+          <div class="operator-info-card anim-target">
+            <div class="operator-logo-large op-airtel" aria-hidden="true">A</div>
+            <div class="operator-info-name">Airtel Money</div>
+            <div class="operator-info-brand">par Airtel Madagascar</div>
+            <ul class="operator-steps" aria-label="Étapes paiement Airtel Money">
+              <li>Composez <strong>*100#</strong> sur votre téléphone Airtel</li>
+              <li>Choisissez « Paiement » et saisissez notre numéro</li>
+              <li>Confirmez avec votre code PIN Airtel Money</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Note de sécurité -->
+        <div style="margin-top: var(--space-10); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6) var(--space-8); display:flex; gap: var(--space-5); align-items:flex-start;" role="note">
+          <div style="flex-shrink:0; width:44px; height:44px; border-radius:50%; background:rgba(138,148,116,0.15); border:1.5px solid var(--color-sage-light); display:flex; align-items:center; justify-content:center; color:var(--color-sage); margin-top:2px;" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <strong style="display:block; font-size:var(--text-sm); color:var(--color-brun); margin-bottom: 4px;">Paiement 100% sécurisé</strong>
+            <p style="font-size:var(--text-sm); color:var(--color-text-muted); font-weight:300; line-height:1.7; max-width:70ch;">Toutes vos transactions sont sécurisées par votre opérateur mobile. Belle Maison ne stocke aucune donnée bancaire. Un SMS de confirmation vous est envoyé après chaque paiement réussi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- WARRANTY -->
+    <section class="warranty-section" aria-labelledby="warranty-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Garantie & Retours</span>
+          <h2 id="warranty-title" class="section-title">Notre politique de garantie</h2>
+          <p class="section-desc">Certains produits sont couverts par une garantie d'un mois contre les défauts de fabrication.</p>
+        </header>
+        <div class="warranty-grid">
+
+          <div class="warranty-text">
+            <p>Chez Belle Maison, nous sélectionnons nos produits avec soin pour leur qualité. <strong>Une garantie de 1 mois</strong> est proposée sur certains articles — notamment les produits mécaniques ou électriques comme les horloges et certains mobiliers.</p>
+            <p>En cas de défaut constaté à la réception ou dans le mois suivant l'achat, contactez-nous immédiatement par <strong>WhatsApp ou e-mail</strong> avec une photo du problème. Nous procédons à un remplacement ou un remboursement selon les cas.</p>
+            <p>Les produits non garantis (textiles, céramiques, articles décoratifs) sont indiqués clairement sur les fiches produit. Tout retour doit être effectué <strong>dans l'emballage d'origine</strong>, dans un état non endommagé.</p>
+            <a href="contact.html" class="btn btn-outline" style="align-self:flex-start; margin-top: var(--space-2);">Contacter le SAV</a>
+          </div>
+
+          <div class="warranty-list">
+            <div class="warranty-item">
+              <div class="warranty-item-icon icon-yes" aria-label="Couvert par la garantie">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="warranty-item-text">
+                <strong>Horloges murales</strong>
+                <span>Garantie 1 mois contre les défauts mécaniques et de fabrication.</span>
+              </div>
+            </div>
+            <div class="warranty-item">
+              <div class="warranty-item-icon icon-yes" aria-label="Couvert par la garantie">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="warranty-item-text">
+                <strong>Mobilier (chaises, étagères, armoires)</strong>
+                <span>Garantie 1 mois contre les défauts de structure et d'assemblage.</span>
+              </div>
+            </div>
+            <div class="warranty-item">
+              <div class="warranty-item-icon icon-no" aria-label="Non couvert par la garantie">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <div class="warranty-item-text">
+                <strong>Textiles (coussins, plaids, rideaux, tapis)</strong>
+                <span>Pas de garantie — vérifiez les dimensions et couleurs avant commande.</span>
+              </div>
+            </div>
+            <div class="warranty-item">
+              <div class="warranty-item-icon icon-no" aria-label="Non couvert par la garantie">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <div class="warranty-item-text">
+                <strong>Accessoires déco (vases, bougies, cadres)</strong>
+                <span>Pas de garantie — articles fragiles, manipuler avec précaution.</span>
+              </div>
+            </div>
+            <div class="warranty-item">
+              <div class="warranty-item-icon icon-no" aria-label="Non couvert par la garantie">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <div class="warranty-item-text">
+                <strong>Plantes & Pots (céramique, rotin)</strong>
+                <span>Pas de garantie — articles artisanaux, légères variations possibles.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FAQ -->
+    <section class="faq-section" aria-labelledby="faq-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Questions fréquentes</span>
+          <h2 id="faq-title" class="section-title">FAQ</h2>
+          <p class="section-desc">Les réponses aux questions les plus posées par nos clients.</p>
+        </header>
+        <div class="faq-list" role="list">
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">
+              Comment passer une commande ?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-inner">Parcourez notre catalogue sur la page <a href="produits.html" style="color:var(--color-or);">Produits</a>, ajoutez les articles à votre panier, puis cliquez sur « Passer à la caisse ». Sélectionnez votre opérateur Mobile Money et confirmez le paiement. Votre commande est enregistrée dès validation.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">
+              Comment suivre ma livraison ?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-inner">Dès l'expédition de votre commande, vous recevez un message WhatsApp avec les informations de suivi. Pour toute question, contactez-nous directement sur <strong>+261 34 00 000 00</strong>. Notre équipe vous répond 7j/7.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">
+              Les frais de livraison sont-ils inclus dans le prix ?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-inner">Non, les frais de livraison sont calculés à la caisse selon votre zone de livraison. <strong>Livraison gratuite</strong> dès 150 000 Ar pour Antananarivo et dès 300 000 Ar pour les provinces. Les tarifs sont affichés clairement avant confirmation.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">
+              Puis-je retourner un article si je ne suis pas satisfait ?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-inner">Les retours sont acceptés <strong>sous 7 jours</strong> pour les articles défectueux ou non conformes à la description. L'article doit être retourné dans son emballage d'origine, non endommagé. Contactez-nous d'abord par WhatsApp pour organiser le retour et le remboursement.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">
+              Comment obtenir des suggestions de décoration personnalisées ?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-inner">C'est simple ! Rendez-vous sur notre page <a href="contact.html" style="color:var(--color-or);">Contact</a>, photographiez la pièce que vous souhaitez décorer et soumettez votre demande. Notre équipe analyse votre espace et vous envoie une sélection de produits adaptés sous 24h. C'est <strong>gratuit et sans engagement</strong>.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">
+              Les produits sont-ils disponibles immédiatement ?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-inner">La majorité de nos produits sont disponibles en stock et expédiés sous <strong>24h à 48h</strong> après confirmation du paiement. Pour les articles mobilier de grande taille (canapés, armoires), un délai supplémentaire de 2 à 5 jours peut s'appliquer. Vous en serez informé par WhatsApp.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div style="text-align:center; margin-top:var(--space-12);">
+          <p style="font-size:var(--text-base); color:var(--color-text-muted); margin-bottom:var(--space-5); max-width:50ch; margin-inline:auto;">Vous avez une autre question ? Notre équipe est disponible pour vous aider.</p>
+          <a href="contact.html" class="btn btn-primary">Contacter notre équipe</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-text footer-logo">Belle Maison</span>
+        <p>Décoration intérieure Japandi · Madagascar</p>
+      </div>
+      <nav class="footer-nav" aria-label="Navigation pied de page">
+        <a href="index.html">Accueil</a>
+        <a href="produits.html">Produits</a>
+        <a href="collections.html">Collections</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="livraison.html">Livraison</a>
+      </nav>
+      <p class="footer-copy">© 2025 Belle Maison Madagascar. Tous droits réservés.</p>
+      <nav class="footer-legal-nav" aria-label="Liens légaux">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <span class="footer-legal-sep" aria-hidden="true">●</span>
+        <a href="cgu.html">CGU</a>
+        <span class="footer-legal-sep" aria-hidden="true">●</span>
+        <a href="cgv.html">CGV</a>
+      </nav>
+    </div>
+  </footer>
+
+
+  <script>
+    // ── Header ────────────────────────────────────────────
+    const header = document.getElementById('header');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      header.classList.toggle('scrolled', y > 60);
+      header.classList.toggle('hidden', y > lastY && y > 120);
+      lastY = y;
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+    const navOvl    = document.getElementById('nav-overlay');
+    function toggleNav(open) {
+      hamburger.setAttribute('aria-expanded', open);
+      navMenu.classList.toggle('is-open', open);
+      navOvl.classList.toggle('is-visible', open);
+      document.body.classList.toggle('menu-open', open);
+    }
+    hamburger.addEventListener('click', () => toggleNav(hamburger.getAttribute('aria-expanded') !== 'true'));
+    navOvl.addEventListener('click', () => toggleNav(false));
+    navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => toggleNav(false)));
+
+    // ── FAQ accordion ─────────────────────────────────────
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('.faq-item.open').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        // open clicked if was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // ── Scroll animations ─────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.anim-target, .info-card, .operator-info-card, .zone-card, .warranty-item, .faq-item').forEach((el, i) => {
+      el.classList.add('anim-target');
+      el.style.transitionDelay = (i % 4) * 80 + 'ms';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

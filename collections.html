@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Belle Maison – Collections spéciales : Nouveautés, Promotions, Saisonnières. Décoration intérieure Japandi à Madagascar.">
+  <title>Collections – Belle Maison Madagascar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── Collections page extras ─────────────────────────── */
+    .collections-hero {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-divider);
+      padding-top: calc(72px + var(--space-10));
+      padding-bottom: var(--space-10);
+    }
+
+    .collection-block {
+      padding-block: clamp(var(--space-16), 7vw, var(--space-20));
+    }
+    .collection-block:nth-child(even) {
+      background: var(--color-surface);
+    }
+
+    .collection-label-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-or-light);
+      color: var(--color-brun);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px var(--space-4);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-4);
+    }
+    .collection-label-pill.sage {
+      background: rgba(138,148,116,0.18);
+      color: var(--color-sage);
+    }
+    .collection-label-pill.promo {
+      background: rgba(192,57,43,0.1);
+      color: #c0392b;
+    }
+
+    /* Seasonal tabs */
+    .season-tabs {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-10);
+    }
+    .season-tab {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-sable);
+      color: var(--color-text-muted);
+      background: transparent;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .season-tab:hover {
+      border-color: var(--color-brun);
+      color: var(--color-brun);
+    }
+    .season-tab.active {
+      background: var(--color-brun);
+      color: var(--color-blanc);
+      border-color: var(--color-brun);
+    }
+
+    .season-panel { display: none; }
+    .season-panel.active { display: grid; }
+
+    /* Promo badge on product */
+    .badge-promo {
+      background: #c0392b;
+      color: white;
+    }
+
+    /* Product card price with old price */
+    .price-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .price-old {
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+      text-decoration: line-through;
+    }
+
+    /* CTA banner */
+    .cta-banner {
+      background: var(--color-brun);
+      color: var(--color-blanc);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-12) var(--space-10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      margin-block: var(--space-16);
+    }
+    .cta-banner-text { display: flex; flex-direction: column; gap: var(--space-3); }
+    .cta-banner-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--color-blanc);
+    }
+    .cta-banner-title em { color: var(--color-or-light); font-style: italic; }
+    .cta-banner-desc { font-size: var(--text-sm); color: rgba(250,247,242,0.75); font-weight: 300; max-width: 50ch; }
+    .btn-banner {
+      background: var(--color-or);
+      color: var(--color-brun);
+      border-color: var(--color-or);
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+    .btn-banner:hover {
+      background: #b8944c;
+      border-color: #b8944c;
+      color: var(--color-brun);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (max-width: 768px) {
+      .cta-banner {
+        padding: var(--space-8) var(--space-6);
+        text-align: center;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main-content" class="skip-link">Passer au contenu principal</a>
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html" class="logo" aria-label="Belle Maison – Accueil">
+        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <rect x="8" y="20" width="28" height="18" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M4 22 L22 6 L40 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="17" y="28" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="34" cy="8" r="3" fill="#C9A46A" opacity="0.9"/>
+        </svg>
+        <span class="logo-text">Belle Maison</span>
+      </a>
+      <nav class="main-nav" id="nav-menu" aria-label="Navigation principale">
+        <ul role="list">
+          <li><a href="index.html" class="nav-link">Accueil</a></li>
+          <li><a href="produits.html" class="nav-link">Produits</a></li>
+          <li><a href="collections.html" class="nav-link active">Collections</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Rechercher">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <a href="produits.html" class="icon-btn" aria-label="Voir les produits">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+            <path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- PAGE HERO -->
+    <section class="collections-hero" aria-label="Collections spéciales">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane">
+          <a href="index.html">Accueil</a>
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">Collections</span>
+        </nav>
+        <h1 class="page-title">Nos Collections</h1>
+        <p class="page-desc">Nouveautés, promotions et sélections saisonnières — des pièces choisies pour chaque moment de vie.</p>
+      </div>
+    </section>
+
+
+    <!-- ── SECTION NOUVEAUTÉS ─────────────────────────────── -->
+    <section class="collection-block" id="nouveautes" aria-labelledby="new-title">
+      <div class="container">
+        <div class="section-header" style="text-align:left; margin-bottom: var(--space-8);">
+          <span class="collection-label-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Nouvelles Arrivées
+          </span>
+          <h2 id="new-title" class="section-title" style="text-align:left;">Nos Nouveautés</h2>
+          <p class="section-desc" style="text-align:left; margin-inline:0;">Pièces fraîchement arrivées — sélectionnées pour leur caractère unique et leur qualité artisanale.</p>
+        </div>
+
+        <div class="products-grid" role="list">
+
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Lampe Shoji">
+              <img src="sources/Lampe Shoji.webp" alt="Lampe Shoji en bambou tressé lumière chaude" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-new">Nouveau</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Luminaires</span>
+              <h3 class="product-name">Lampe Shoji</h3>
+              <div class="product-footer">
+                <span class="product-price">75 000 Ar</span>
+                <a href="produits.html" class="btn btn-cart" aria-label="Voir Lampe Shoji">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Coussin Lin Naturel">
+              <img src="sources/Coussin en lin naturel.jpeg" alt="Coussin en lin naturel beige" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-new">Nouveau</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Textiles</span>
+              <h3 class="product-name">Coussin Lin Naturel</h3>
+              <div class="product-footer">
+                <span class="product-price">32 000 Ar</span>
+                <a href="produits.html" class="btn btn-cart" aria-label="Voir Coussin Lin Naturel">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Tableau Botanique">
+              <img src="sources/Tableau botanique.webp" alt="Tableau botanique encadré style japonais" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-new">Nouveau</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Art Mural</span>
+              <h3 class="product-name">Tableau Botanique</h3>
+              <div class="product-footer">
+                <span class="product-price">65 000 Ar</span>
+                <a href="produits.html" class="btn btn-cart" aria-label="Voir Tableau Botanique">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Pot Wabi-Sabi">
+              <img src="sources/pot wabi sabi.jpg" alt="Pot céramique style Wabi-Sabi" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-new">Nouveau</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Plantes & Pots</span>
+              <h3 class="product-name">Pot Wabi-Sabi</h3>
+              <div class="product-footer">
+                <span class="product-price">28 000 Ar</span>
+                <a href="produits.html" class="btn btn-cart" aria-label="Voir Pot Wabi-Sabi">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="products-cta" style="margin-top: var(--space-8);">
+          <a href="produits.html?filter=nouveau" class="btn btn-outline">Voir toutes les nouveautés</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── SECTION PROMOTIONS ─────────────────────────────── -->
+    <section class="collection-block" id="promotions" aria-labelledby="promo-title">
+      <div class="container">
+        <div class="section-header" style="text-align:left; margin-bottom: var(--space-8);">
+          <span class="collection-label-pill promo">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            Promotions
+          </span>
+          <h2 id="promo-title" class="section-title" style="text-align:left;">Offres Spéciales</h2>
+          <p class="section-desc" style="text-align:left; margin-inline:0;">Réductions exclusives sur nos accessoires et pièces de décoration — offres à durée limitée.</p>
+        </div>
+
+        <div class="products-grid" role="list">
+
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Vase Kintsugi en promotion">
+              <img src="sources/Vase kintsugi.webp" alt="Vase céramique Kintsugi" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-promo">-20%</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Accessoires</span>
+              <h3 class="product-name">Vase Kintsugi</h3>
+              <div class="product-footer">
+                <div class="price-wrap">
+                  <span class="price-old">60 000 Ar</span>
+                  <span class="product-price">48 000 Ar</span>
+                </div>
+                <a href="produits.html" class="btn btn-cart" aria-label="Voir Vase Kintsugi">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Bougie Cèdre en promotion">
+              <img src="sources/Bougie cèdre et santal.webp" alt="Bougie parfumée cèdre et santal" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-promo">-15%</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Accessoires</span>
+              <h3 class="product-name">Bougie Cèdre & Santal</h3>
+              <div class="product-footer">
+                <div class="price-wrap">
+                  <span class="price-old">26 000 Ar</span>
+                  <span class="product-price">22 000 Ar</span>
+                </div>
+                <a href="produits.html" class="btn btn-cart" aria-label="Voir Bougie Cèdre">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Cache-Pot Rotin en promotion">
+              <img src="sources/Cache pot rotin.webp" alt="Cache-pot en rotin naturel" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-promo">-10%</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Plantes & Pots</span>
+              <h3 class="product-name">Cache-Pot Rotin</h3>
+              <div class="product-footer">
+                <div class="price-wrap">
+                  <span class="price-old">20 000 Ar</span>
+                  <span class="product-price">18 000 Ar</span>
+                </div>
+                <a href="produits.html" class="btn btn-cart" aria-label="Voir Cache-Pot Rotin">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Cadre Laiton en promotion">
+              <img src="sources/cadre laiton.jpg" alt="Cadre photo en laiton doré" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-promo">-30%</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Accessoires</span>
+              <h3 class="product-name">Cadre Laiton</h3>
+              <div class="product-footer">
+                <div class="price-wrap">
+                  <span class="price-old">50 000 Ar</span>
+                  <span class="product-price">35 000 Ar</span>
+                </div>
+                <a href="produits.html" class="btn btn-cart" aria-label="Voir Cadre Laiton">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── SECTION COLLECTIONS SAISONNIÈRES ──────────────── -->
+    <section class="collection-block" id="saisonnieres" aria-labelledby="season-title">
+      <div class="container">
+        <div class="section-header" style="text-align:left; margin-bottom: var(--space-8);">
+          <span class="collection-label-pill sage">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M2 12h20"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10"/></svg>
+            Collections Saisonnières
+          </span>
+          <h2 id="season-title" class="section-title" style="text-align:left;">La Maison au fil des saisons</h2>
+          <p class="section-desc" style="text-align:left; margin-inline:0;">Des sélections pensées pour chaque moment — fêtes, rentrée, chaleur estivale ou cocooning hivernal.</p>
+        </div>
+
+        <!-- Season tabs -->
+        <div class="season-tabs" role="tablist" aria-label="Collections saisonnières">
+          <button class="season-tab active" data-tab="ete" role="tab" aria-selected="true" aria-controls="tab-ete">
+            ☀️ Été
+          </button>
+          <button class="season-tab" data-tab="hiver" role="tab" aria-selected="false" aria-controls="tab-hiver">
+            ❄️ Hiver
+          </button>
+          <button class="season-tab" data-tab="fetes" role="tab" aria-selected="false" aria-controls="tab-fetes">
+            🎄 Fêtes
+          </button>
+          <button class="season-tab" data-tab="rentree" role="tab" aria-selected="false" aria-controls="tab-rentree">
+            📚 Rentrée
+          </button>
+        </div>
+
+        <!-- Été -->
+        <div id="tab-ete" class="season-panel active products-grid" role="tabpanel" aria-labelledby="tab-ete-btn">
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Coussin Lin Naturel">
+              <img src="sources/Coussin en lin naturel.jpeg" alt="Coussin lin clair pour l'été" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Textiles</span>
+              <h3 class="product-name">Coussin Lin Naturel</h3>
+              <div class="product-footer"><span class="product-price">32 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Jardinière Bois">
+              <img src="https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=600&q=80&auto=format&fit=crop" alt="Jardinière bois pour saison estivale" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Plantes & Pots</span>
+              <h3 class="product-name">Jardinière Bois</h3>
+              <div class="product-footer"><span class="product-price">54 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Lampe de Table Washi">
+              <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&q=80&auto=format&fit=crop" alt="Lumière tamisée pour soirées d'été" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-gold">Coup de ♡</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Luminaires</span>
+              <h3 class="product-name">Lampe de Table Washi</h3>
+              <div class="product-footer"><span class="product-price">58 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Plateau Teck">
+              <img src="sources/plateau teck.webp" alt="Plateau teck pour l'été" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Accessoires</span>
+              <h3 class="product-name">Plateau Teck</h3>
+              <div class="product-footer"><span class="product-price">42 000 Ar</span></div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Hiver -->
+        <div id="tab-hiver" class="season-panel products-grid" role="tabpanel" aria-labelledby="tab-hiver-btn">
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Plaid Coton Doux">
+              <img src="sources/Plaid coton doux.webp" alt="Plaid coton douillet pour l'hiver" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Textiles</span>
+              <h3 class="product-name">Plaid Coton Doux</h3>
+              <div class="product-footer"><span class="product-price">47 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Bougie Cèdre et Santal">
+              <img src="sources/Bougie cèdre et santal.webp" alt="Bougie parfumée ambiance hivernale" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-new">Nouveau</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Accessoires</span>
+              <h3 class="product-name">Bougie Cèdre & Santal</h3>
+              <div class="product-footer"><span class="product-price">22 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Tapis Berbère Sable">
+              <img src="sources/tapis berbere sable.jpg" alt="Tapis berbère chaud et douillet" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Textiles</span>
+              <h3 class="product-name">Tapis Berbère Sable</h3>
+              <div class="product-footer"><span class="product-price">320 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Lustre Rotin Naturel">
+              <img src="sources/Le Lustre En Rotin Naturel.webp" alt="Lustre rotin lumière chaude d'hiver" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Luminaires</span>
+              <h3 class="product-name">Lustre Rotin Naturel</h3>
+              <div class="product-footer"><span class="product-price">185 000 Ar</span></div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Fêtes -->
+        <div id="tab-fetes" class="season-panel products-grid" role="tabpanel" aria-labelledby="tab-fetes-btn">
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Miroir Arche Bois">
+              <img src="sources/miroir arche bois.webp" alt="Miroir arche bois idée cadeau" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-gold">Coup de ♡</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Art Mural</span>
+              <h3 class="product-name">Miroir Arche Bois</h3>
+              <div class="product-footer"><span class="product-price">148 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Vase Kintsugi">
+              <img src="sources/Vase kintsugi.webp" alt="Vase Kintsugi cadeau de fête" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Accessoires</span>
+              <h3 class="product-name">Vase Kintsugi</h3>
+              <div class="product-footer"><span class="product-price">48 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Cadre Laiton">
+              <img src="sources/cadre laiton.jpg" alt="Cadre laiton idée cadeau Noël" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Accessoires</span>
+              <h3 class="product-name">Cadre Laiton</h3>
+              <div class="product-footer"><span class="product-price">35 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Tableau Botanique">
+              <img src="sources/Tableau botanique.webp" alt="Tableau botanique cadeau original" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Art Mural</span>
+              <h3 class="product-name">Tableau Botanique</h3>
+              <div class="product-footer"><span class="product-price">65 000 Ar</span></div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Rentrée -->
+        <div id="tab-rentree" class="season-panel products-grid" role="tabpanel" aria-labelledby="tab-rentree-btn">
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Étagère Zen">
+              <img src="sources/Etagère Zen.jpg" alt="Étagère Zen pour bureau étudiant" width="600" height="480" loading="lazy" decoding="async">
+              <div class="product-badge badge-new">Nouveau</div>
+            </a>
+            <div class="product-info">
+              <span class="product-category">Mobilier</span>
+              <h3 class="product-name">Étagère Zen</h3>
+              <div class="product-footer"><span class="product-price">120 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Lampe de Table Washi">
+              <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&q=80&auto=format&fit=crop" alt="Lampe bureau pour rentrée étudiant" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Luminaires</span>
+              <h3 class="product-name">Lampe de Table Washi</h3>
+              <div class="product-footer"><span class="product-price">58 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Tableau Botanique">
+              <img src="sources/Tableau botanique.webp" alt="Tableau déco pour chambre étudiante" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Art Mural</span>
+              <h3 class="product-name">Tableau Botanique</h3>
+              <div class="product-footer"><span class="product-price">65 000 Ar</span></div>
+            </div>
+          </article>
+          <article class="product-card" role="listitem">
+            <a href="produits.html" class="product-img-wrap" aria-label="Voir Cache-Pot Rotin">
+              <img src="sources/Cache pot rotin.webp" alt="Cache-pot pour plante verte bureau" width="600" height="480" loading="lazy" decoding="async">
+            </a>
+            <div class="product-info">
+              <span class="product-category">Plantes & Pots</span>
+              <h3 class="product-name">Cache-Pot Rotin</h3>
+              <div class="product-footer"><span class="product-price">18 000 Ar</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CTA BANNER -->
+    <div class="container">
+      <div class="cta-banner" role="complementary">
+        <div class="cta-banner-text">
+          <h2 class="cta-banner-title">Votre maison mérite le meilleur.<br><em>Explorez toute la collection.</em></h2>
+          <p class="cta-banner-desc">Plus de 20 produits soigneusement sélectionnés pour transformer chaque recoin de votre intérieur.</p>
+        </div>
+        <a href="produits.html" class="btn btn-banner">Voir tous les produits</a>
+      </div>
+    </div>
+
+  </main>
+
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-text footer-logo">Belle Maison</span>
+        <p>Décoration intérieure Japandi · Madagascar</p>
+      </div>
+      <nav class="footer-nav" aria-label="Navigation pied de page">
+        <a href="index.html">Accueil</a>
+        <a href="produits.html">Produits</a>
+        <a href="collections.html">Collections</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="livraison.html">Livraison</a>
+      </nav>
+      <p class="footer-copy">© 2025 Belle Maison Madagascar. Tous droits réservés.</p>
+      <nav class="footer-legal-nav" aria-label="Liens légaux">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <span class="footer-legal-sep" aria-hidden="true">●</span>
+        <a href="cgu.html">CGU</a>
+        <span class="footer-legal-sep" aria-hidden="true">●</span>
+        <a href="cgv.html">CGV</a>
+      </nav>
+    </div>
+  </footer>
+
+
+  <script>
+    // ── Header scroll ────────────────────────────────────
+    const header = document.getElementById('header');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      header.classList.toggle('scrolled', y > 60);
+      header.classList.toggle('hidden', y > lastY && y > 120);
+      lastY = y;
+    }, { passive: true });
+
+    // ── Hamburger ────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+    const overlay   = document.getElementById('nav-overlay');
+    function toggleNav(open) {
+      hamburger.setAttribute('aria-expanded', open);
+      navMenu.classList.toggle('is-open', open);
+      overlay.classList.toggle('is-visible', open);
+      document.body.classList.toggle('menu-open', open);
+    }
+    hamburger.addEventListener('click', () => toggleNav(hamburger.getAttribute('aria-expanded') !== 'true'));
+    overlay.addEventListener('click', () => toggleNav(false));
+    navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => toggleNav(false)));
+
+    // ── Season tabs ──────────────────────────────────────
+    document.querySelectorAll('.season-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.season-tab').forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.season-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ── Scroll animations ────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.product-card, .section-header').forEach((el, i) => {
+      el.classList.add('anim-target');
+      el.style.transitionDelay = (i % 4) * 80 + 'ms';
+      observer.observe(el);
+    });
+  </script>
+  <script src="quickview.js"></script>
+</body>
+</html>

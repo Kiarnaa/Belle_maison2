@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Belle Maison – Tous nos produits de décoration intérieure Japandi. Luminaires, Textiles, Art Mural, Accessoires, Plantes & Pots, Mobilier. Livraison Madagascar.">
+  <title>Produits – Belle Maison Madagascar</title>
+
+  <!-- Google Fonts : Playfair Display + Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Feuilles de style : variables partagées + spécifique produits -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="produits.css">
+</head>
+
+<body>
+
+  <!-- ── SKIP LINK accessibilité ────────────────────────────────── -->
+  <a href="#main-content" class="skip-link">Passer au contenu principal</a>
+
+  <!-- ================================================================
+       HEADER (identique à l'accueil)
+  ================================================================ -->
+  <header class="site-header" id="header">
+    <div class="header-inner">
+
+      <button class="hamburger" id="hamburger"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="index.html" class="logo" aria-label="Belle Maison – Accueil">
+        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <rect x="8" y="20" width="28" height="18" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M4 22 L22 6 L40 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="17" y="28" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="34" cy="8" r="3" fill="#C9A46A" opacity="0.9"/>
+        </svg>
+        <span class="logo-text">Belle Maison</span>
+      </a>
+
+      <nav class="main-nav" id="nav-menu" aria-label="Navigation principale">
+        <ul role="list">
+          <li><a href="index.html" class="nav-link">Accueil</a></li>
+          <li><a href="produits.html" class="nav-link active">Produits</a></li>
+          <li><a href="collections.html" class="nav-link">Collections</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="search-btn" aria-label="Rechercher">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+        <button class="icon-btn cart-btn" id="cart-toggle-btn" aria-label="Voir le panier">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+            <path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="cart-badge" id="cart-count" aria-live="polite">0</span>
+        </button>
+      </div>
+
+    </div>
+    <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  </header>
+
+
+  <!-- ================================================================
+       MAIN
+  ================================================================ -->
+  <main id="main-content">
+
+    <section class="page-hero" aria-label="Titre de la page Produits">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane">
+          <a href="belle-maison.html">Accueil</a>
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">Produits</span>
+        </nav>
+        <h1 class="page-title">Notre Collection</h1>
+        <p class="page-desc">Pièces artisanales pour des intérieurs Japandi — chaleureux, minimalistes et authentiques.</p>
+      </div>
+    </section>
+
+    <div class="shop-layout container" id="shop">
+
+      <aside class="filter-sidebar" id="filter-sidebar" aria-label="Filtres produits">
+
+        <button class="filter-close" id="filter-close" aria-label="Fermer les filtres">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+
+        <div class="filter-group">
+          <h2 class="filter-title">Catégories</h2>
+          <ul class="filter-list" role="list" id="category-filters">
+            <li><button class="filter-btn active" data-filter="all" aria-pressed="true">Tout voir <span class="filter-count">20</span></button></li>
+            <li><button class="filter-btn" data-filter="Luminaires" aria-pressed="false">Luminaires <span class="filter-count">4</span></button></li>
+            <li><button class="filter-btn" data-filter="Textiles" aria-pressed="false">Textiles <span class="filter-count">4</span></button></li>
+            <li><button class="filter-btn" data-filter="Art Mural" aria-pressed="false">Art Mural <span class="filter-count">3</span></button></li>
+            <li><button class="filter-btn" data-filter="Accessoires" aria-pressed="false">Accessoires déco <span class="filter-count">4</span></button></li>
+            <li><button class="filter-btn" data-filter="Plantes" aria-pressed="false">Plantes &amp; Pots <span class="filter-count">3</span></button></li>
+            <li><button class="filter-btn" data-filter="Mobilier" aria-pressed="false">Mobilier <span class="filter-count">2</span></button></li>
+          </ul>
+        </div>
+
+        <div class="filter-group">
+          <h2 class="filter-title">Prix (Ar)</h2>
+          <div class="price-range">
+            <input type="range" id="price-max" min="20000" max="2000000" step="10000" value="2000000">
+            <div class="price-labels">
+              <span>20 000 Ar</span>
+              <span id="price-display">2 000 000 Ar</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h2 class="filter-title">Options</h2>
+          <label class="checkbox-label">
+            <input type="checkbox" id="filter-garantie"> Garantie 1 mois
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="filter-nouveau"> Nouveautés uniquement
+          </label>
+        </div>
+
+      </aside>
+
+      <section class="products-section" aria-labelledby="products-heading">
+        <div class="products-topbar">
+          <div class="topbar-left">
+            <button class="filter-toggle-btn" id="filter-toggle" aria-expanded="false" aria-controls="filter-sidebar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3Z"/>
+              </svg>
+              Filtres
+            </button>
+            <p id="products-heading" class="results-count"><span id="visible-count">20</span> produits</p>
+          </div>
+          <div class="topbar-right">
+            <select id="sort-select" class="sort-select" aria-label="Trier les produits">
+              <option value="default">Ordre par défaut</option>
+              <option value="price-asc">Prix croissant</option>
+              <option value="price-desc">Prix décroissant</option>
+              <option value="name-asc">Nom A → Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="products-grid" id="products-grid" role="list" aria-live="polite" aria-label="Liste des produits"></div>
+
+        <div class="empty-state" id="empty-state" hidden>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <p>Aucun produit ne correspond à vos filtres.</p>
+          <button class="btn btn-outline" id="reset-filters">Réinitialiser</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-text footer-logo">Belle Maison</span>
+        <p>Décoration intérieure Japandi · Madagascar</p>
+      </div>
+      <nav class="footer-nav" aria-label="Navigation pied de page">
+        <a href="index.html">Accueil</a>
+        <a href="produits.html">Produits</a>
+        <a href="collections.html">Collections</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="livraison.html">Livraison</a>
+      </nav>
+      <p class="footer-copy">© 2025 Belle Maison Madagascar. Tous droits réservés.</p>
+      <nav class="footer-legal-nav" aria-label="Liens légaux">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <span class="footer-legal-sep" aria-hidden="true">●</span>
+        <a href="cgu.html">CGU</a>
+        <span class="footer-legal-sep" aria-hidden="true">●</span>
+        <a href="cgv.html">CGV</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Panier" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <h2 class="cart-title">Mon Panier</h2>
+      <button class="cart-close" id="cart-close" aria-label="Fermer le panier">✕</button>
+    </div>
+
+    <div class="cart-body" id="cart-body">
+      <div class="cart-empty" id="cart-empty">
+        <p>Votre panier est vide.</p>
+        <span>Ajoutez des produits pour commencer.</span>
+      </div>
+      <ul class="cart-list" id="cart-list" role="list"></ul>
+    </div>
+
+    <div class="cart-footer" id="cart-footer" hidden>
+      <div class="cart-subtotal">
+        <span>Sous-total</span>
+        <strong id="cart-total">0 Ar</strong>
+      </div>
+      <p class="cart-note">Livraison calculée à la caisse</p>
+      <button class="btn btn-primary btn-checkout" id="checkout-btn">Passer à la caisse</button>
+    </div>
+  </aside>
+
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Fermer la modale">✕</button>
+
+      <div class="modal-header">
+        <span class="section-label">Finaliser ma commande</span>
+        <h2 id="modal-title" class="modal-title">Choisissez votre<br><em>mode de paiement</em></h2>
+      </div>
+
+      <div class="modal-operators" role="radiogroup" aria-label="Opérateur Mobile Money">
+        <label class="operator-card" for="op-mvola">
+          <input type="radio" name="operator" id="op-mvola" value="MVola" checked>
+          <div class="operator-inner">
+            <div class="operator-logo mvola-logo">M</div>
+            <span class="operator-name">MVola</span>
+            <span class="operator-brand">Telma</span>
+          </div>
+        </label>
+
+        <label class="operator-card" for="op-orange">
+          <input type="radio" name="operator" id="op-orange" value="Orange Money">
+          <div class="operator-inner">
+            <div class="operator-logo orange-logo">O</div>
+            <span class="operator-name">Orange Money</span>
+            <span class="operator-brand">Orange</span>
+          </div>
+        </label>
+
+        <label class="operator-card" for="op-airtel">
+          <input type="radio" name="operator" id="op-airtel" value="Airtel Money">
+          <div class="operator-inner">
+            <div class="operator-logo airtel-logo">A</div>
+            <span class="operator-name">Airtel Money</span>
+            <span class="operator-brand">Airtel</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="modal-form">
+        <div class="form-group">
+          <label for="phone-number" class="form-label">Numéro de téléphone</label>
+          <div class="input-wrap">
+            <span class="input-prefix">+261</span>
+            <input type="tel" id="phone-number" class="form-input" placeholder="34 00 000 00">
+          </div>
+        </div>
+
+        <div class="modal-summary">
+          <span>Total à payer</span>
+          <strong id="modal-total">0 Ar</strong>
+        </div>
+
+        <button class="btn btn-primary btn-confirm" id="confirm-btn">Confirmer le paiement</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+  <div class="filter-overlay" id="filter-overlay" aria-hidden="true"></div>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="search-overlay" role="search" aria-label="Rechercher un produit">
+    <div class="search-inner">
+      <div class="search-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="search-input" class="search-input" placeholder="Rechercher un produit…" autocomplete="off" aria-label="Terme de recherche">
+        <button id="search-close-btn" class="search-close-btn" aria-label="Fermer la recherche">✕</button>
+      </div>
+      <div id="search-results">
+        <p class="search-hint">Tapez pour rechercher un produit…</p>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="produits.js"></script>
+  <script src="quickview.js"></script>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+    const navOvl    = document.getElementById('nav-overlay');
+
+    function toggleNav(open) {
+      hamburger.setAttribute('aria-expanded', open);
+      navMenu.classList.toggle('is-open', open);
+      navOvl.classList.toggle('is-visible', open);
+      document.body.classList.toggle('menu-open', open);
+    }
+    hamburger.addEventListener('click', () => toggleNav(hamburger.getAttribute('aria-expanded') !== 'true'));
+    navOvl.addEventListener('click', () => toggleNav(false));
+    navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => toggleNav(false)));
+
+    const hdr = document.getElementById('header');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      hdr.classList.toggle('scrolled', y > 60);
+      hdr.classList.toggle('hidden', y > lastY && y > 120);
+      lastY = y;
+    }, { passive: true });
+  </script>
+</body>
+</html>
